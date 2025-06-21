@@ -1,0 +1,44 @@
+# 🚀 Configurações do Servidor Web
+server:
+  port: 8080 # Porta padrão para a sua API
+
+# 🗄️ Configurações do Banco de Dados H2
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE # H2 em memória, não fecha o banco. Útil para desenvolvimento.
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: true # Ativa o console do H2
+      path: /h2-console # Acesse em http://localhost:8080/h2-console
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update # Cria/atualiza o esquema do banco de dados automaticamente. **NÃO USE EM PRODUÇÃO!**
+    show-sql: true # Exibe as consultas SQL no console (ótimo para depuração)
+    properties:
+      hibernate:
+        format_sql: true # Formata o SQL para melhor legibilidade no console
+
+# 🛠️ Spring DevTools: Otimizando o Desenvolvimento
+devtools:
+  restart:
+    enabled: true # Reinicia a aplicação automaticamente ao detectar mudanças no código
+  livereload:
+    enabled: true # Ativa o LiveReload (requer extensão no navegador)
+
+# 🔒 Configurações JWT para Geração e Validação Interna
+# IMPORTANTE: EM PRODUÇÃO, A CHAVE SECRETA DEVE SER UMA VARIÁVEL DE AMBIENTE OU GERENCIADA POR UM SERVIÇO DE SECRETS!
+jwt:
+  secret: umaChaveSecretaMuitoLongaEComplexaParaAssinarTokensJWT # Mínimo de 32 caracteres
+  expiration: 3600000 # Tempo de expiração do token em milissegundos (1 hora)
+
+# 📚 Springdoc OpenAPI (Swagger): Documentação da API
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html # Caminho para a interface do Swagger UI
+    disable-swagger-default-url: true # Evita carregar a URL padrão do Swagger (Petstore)
+  api-docs:
+    path: /v3/api-docs # Caminho para os arquivos de definição da API (JSON/YAML)
